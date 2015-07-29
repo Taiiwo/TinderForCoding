@@ -1,15 +1,29 @@
 <dom-module id="eric-switches">
   <template label={{name}}>
+    <style>
+      .txtbox {
+        display:inline-block;
+      }
+      .switch {
+        display: inline-block;
+      }
+    </style>
     <div class="col s6">
       <p>{{name}}</p>
       <div class="eric-switches">
         <div class="switch">
           <label>
-            No
-          <input type="checkbox">
-          <span class="lever"></span>
-            Yes
+              No
+            <input id="switch" type="checkbox">
+            <span class="lever"></span>
+              Yes
           </label>
+        </div>
+        <div class="txtbox">
+          <div class="input-field col s6">
+            <input id="num" type="text" class="validate">
+            <label for="num">Ideal Number</label>
+          </div>
         </div>
       </div>
     </div>
@@ -17,6 +31,10 @@
 </dom-module>
 <script>
   Polymer({
-    is: "eric-switches"
-  })
+    is: "eric-switches",
+    attached: function() {
+      var swit = $('#switch');
+      var num = $('#num');
+    }
+  });
 </script>

@@ -3,10 +3,16 @@ nav {
 }
 
 .container {
-  width: 100%;
-  max-width: 300px;
+  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 .eric-switches {
-  text-align: center;
+
+}
+
+.txtbox {
+  max-width: 200px;
+  width: 100%;
+  margin: auto;
 }
