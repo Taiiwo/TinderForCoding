@@ -1,0 +1,63 @@
+<link rel="import" href="../components/eric/skill-slider.html" />
+<dom-module id="register-page">
+	<template>
+		<style>
+			h2 {
+				font-size: 240%;
+			}
+			.skillSlider {
+				width: 100%;
+				max-width: 440px;
+			}
+		</style>
+		<div class="register-div">
+		<div class="container">
+			<h2>Sign Up</h2>
+			<div class="row">
+				<div class="input-field col s6">
+					<input value="" id="email" type="text" class="validate">
+					<label class="active" for="email">Email Address</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+					<input value="" id="passw" type="text" class="validate">
+					<label class="active" for="passw">Password</label>
+				</div>
+			</div>
+			<h2>What are you good at?</h2>
+			<skill-slider id="wd" name="Web Development"></skill-slider>
+			<skill-slider id="be" name="Back End Development"></skill-slider>
+			<skill-slider id="fe" name="Front End Development"></skill-slider>
+			<skill-slider id="mad" name="Mobile App Development"></skill-slider>
+			<button id="register" class="btn waves-effect waves-light" type="submit" name="action">
+				Submit
+				<i class="material-icons right">send</i>
+			</button>
+	</div>
+	</template>
+</dom-module>
+<script>
+	Polymer({
+		is: "register-page",
+		baseUrl: "",
+		attached: function() {
+			$('#register').click(function(){
+				$.post(
+					baseUrl + 'api.py/register',
+					{
+						email: $('#email').val(),
+						passw: $('#passw').val(),
+						wd: $('#wd input').val(),
+						be: $('#be input').val(),
+						fe: $('#fe input').val(),
+						mad: $('#mad input').val()
+					},
+					function(data) {
+						console.log(data);
+					}
+				);
+			});
+		}
+	});
+</script>
