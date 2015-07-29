@@ -1,0 +1,28 @@
+<dom-module id="submission-page">
+  <template>
+    <div class="container">
+      <h2>Submit your project</h2>
+      <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="input_text" type="text" length="10">
+            <label for="input_text">Input text</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
+            <label for="textarea1">Textarea</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is:"submission-page"
+  });
+</script>
