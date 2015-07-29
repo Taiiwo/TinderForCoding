@@ -1,0 +1,22 @@
+<dom-module id="eric-switches">
+  <template label={{name}}>
+    <div class="col s6">
+      <p>{{name}}</p>
+      <div class="eric-switches">
+        <div class="switch">
+          <label>
+            No
+          <input type="checkbox">
+          <span class="lever"></span>
+            Yes
+          </label>
+        </div>
+      </div>
+    </div>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "eric-switches"
+  })
+</script>

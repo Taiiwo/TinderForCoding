@@ -1,23 +1,40 @@
+<link rel="import" href="../components/eric/switches.html"
 <dom-module id="submission-page">
   <template>
+    <head>
+      <script>$(document).ready(function() {
+        $('input#input_text, textarea#textarea1').characterCounter();
+      });</script>
+      <style>
+        h2 {
+          font-size: 240%;
+        }
+
+      </style>
+    </head>
     <div class="container">
       <h2>Submit your project</h2>
       <div class="row">
       <form class="col s12">
         <div class="row">
           <div class="input-field col s6">
-            <input id="input_text" type="text" length="10">
-            <label for="input_text">Input text</label>
+            <input id="input_text" type="text" length="20">
+            <label for="input_text">Name your project</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
-            <label for="textarea1">Textarea</label>
+            <textarea id="textarea1" class="materialize-textarea" length="200"></textarea>
+            <label for="textarea1">Quickly describe your project</label>
           </div>
         </div>
       </form>
     </div>
+    <h2>Who do you need</h2>
+    <eric-switches id="" name="Web Developers"></eric-switches>
+    <eric-switches id="" name="Back End Developers"></eric-switches>
+    <eric-switches id="" name="Front End Developers"></eric-switches>
+    <eric-switches id="" name="Mobile Developers"></eric-switches>
     </div>
   </template>
 </dom-module>
