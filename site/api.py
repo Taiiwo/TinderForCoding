@@ -23,5 +23,9 @@ def register(req, user, passw, wd, be, fe, mad):
         return 1
     else:
         return "error"
+
+def submitIdea(req, projectName, projectDesc, wdS, beS, feS, maS, wdN, beN, feN, maN):
+    pass
+
 def sha512(string):
     return hashlib.sha512(string).hexdigest()
