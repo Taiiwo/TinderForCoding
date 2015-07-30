@@ -43,27 +43,27 @@
   </template>
 </dom-module>
 <script>
-  Polymer({
-    is:"submission-page",
-    attached: function() {
-        var baseUrl = "";
-        $('#submitIdea').click(function(){
-            $('eric-switches').each(function(index, swit){
-              stat = swit.$.inputTag.checked;
-              var id = swit.id;
-              if (stat){
-                switches[id] = {};
-                switches[id]["num"] = $($(swit.$.slider1).children()[0]).val();
-                switches[id]["skill"] = $($(swit.$.slider2).children()[0]).val();
-              }
-              else {
-                switches[id] = false;
-              }
-              //switches[]
-            });
-            $.post(
-                baseUrl + 'api.py/submitidea',
-                {
+    Polymer({
+        is:"submission-page",
+        attached: function() {
+            var baseUrl = "";
+            $('#submitIdea').click(function(){
+                var switches = {};
+                $('eric-switches').each(function(index, swit){
+                    stat = swit.$.inputTag.checked;
+                    var id = swit.id;
+                    if (stat){
+                        switches[id] = {};
+                        switches[id]["num"] = $($(swit.$.slider1).children()[0]).val();
+                        switches[id]["skill"] = $($(swit.$.slider2).children()[0]).val();
+                    }
+                    else {
+                        switches[id] = {};
+                        switches[id]["num"] = 0;
+                        switches[id]["skill"] = 0;
+                    }
+                });
+                var data = {
                     projectName: $('#projectName').val(),
                     projectDesc: $('#projectDesc').val(),
                     wdN: switches.wds.num,
@@ -74,7 +74,10 @@
                     feS: switches.fes.skill,
                     maN: switches.mads.num,
                     maS: switches.mads.skill
-                    },
+                };
+                $.post(
+                    baseUrl + 'api.py/submitidea',
+                    data,
                     function(data) {
                         if (data == 'userTaken'){
                             toast('Sorry, username taken.');
@@ -89,5 +92,5 @@
                 );
             });
         }
-  });
+    });
 </script>
