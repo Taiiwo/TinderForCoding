@@ -18,29 +18,68 @@
       <div class="row">
       <form class="col s12">
         <div class="row">
-          <div class="input-field col s6">
-            <input id="input_text" type="text" length="20">
+          <div class="input-field col">
+            <input id="projectName" type="text" length="20"/>
             <label for="input_text">Name your project</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea" length="200"></textarea>
+            <textarea id="projectDesc" class="materialize-textarea" length="200"></textarea>
             <label for="textarea1">Quickly describe your project</label>
           </div>
         </div>
+      <h2>Who do you need?</h2>
+      <eric-switches id="wds" name="Web Developers"></eric-switches>
+      <eric-switches id="bes" name="Back End Developers"></eric-switches>
+      <eric-switches id="fes" name="Front End Developers"></eric-switches>
+      <eric-switches id="mads" name="Mobile Developers"></eric-switches>
+      <button id="submitIdea" class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+      </button>
       </form>
     </div>
-      <h2>Who do you need?</h2>
-      <eric-switches id="" name="Web Developers"></eric-switches>
-      <eric-switches id="" name="Back End Developers"></eric-switches>
-      <eric-switches id="" name="Front End Developers"></eric-switches>
-      <eric-switches id="" name="Mobile Developers"></eric-switches>
     </div>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is:"submission-page"
+    is:"submission-page",
+    attached: function() {
+			var baseUrl = "";
+			$('#submitIdea').click(function(){
+        $('eric-switches').each(function(index, swit){
+          stat = swit.$.inputTag.checked;
+          var id = swit.id;
+          if (stat){
+            switches[id] = {};
+            switches[id]["num"];
+            switches[id]["skill"];
+
+          }
+          //switches[]
+        });
+				$.post(
+					baseUrl + 'api.py/submitidea',
+					{
+						projectName: $('#projectName').val(),
+						projectDesc: $('#projectDesc').val(),
+            wdN: $('#wd input').val(),
+            wdS: $('#wd input').val(),
+					},
+					function(data) {
+						if (data == 'userTaken'){
+							toast('Sorry, username taken.');
+						}
+						else if (data == 'error') {
+							toast('Unexpected error');
+						}
+						else {
+							toast('Registration Successful!');
+						}
+					}
+				);
+			});
+		}
   });
 </script>

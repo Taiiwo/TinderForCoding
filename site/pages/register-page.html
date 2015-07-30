@@ -15,14 +15,14 @@
 			<h2>Sign Up</h2>
 			<div class="row">
 				<div class="input-field col s6">
-					<input value="" id="email" type="text" class="validate">
-					<label class="active" for="email">Email Address</label>
+					<input value="" id="user" type="text" class="validate" pattern="\w{1,140}">
+					<label class="active" for="user" data-error="Too long! (That's what she said)">Username</label>
 				</div>
 			</div>
 			<div class="row">
 				<div class="input-field col s6">
-					<input value="" id="passw" type="text" class="validate">
-					<label class="active" for="passw">Password</label>
+					<input value="" id="passw" type="password" class="validate"  pattern=".{6,140}">
+					<label data-error="Too short!" class="active" for="passw">Password</label>
 				</div>
 			</div>
 			<h2>How confident are you?</h2>
@@ -40,13 +40,13 @@
 <script>
 	Polymer({
 		is: "register-page",
-		baseUrl: "",
 		attached: function() {
+			var baseUrl = "";
 			$('#register').click(function(){
 				$.post(
 					baseUrl + 'api.py/register',
 					{
-						email: $('#email').val(),
+						user: $('#user').val(),
 						passw: $('#passw').val(),
 						wd: $('#wd input').val(),
 						be: $('#be input').val(),
@@ -54,7 +54,15 @@
 						mad: $('#mad input').val()
 					},
 					function(data) {
-						console.log(data);
+						if (data == 'userTaken'){
+							toast('Sorry, username taken.');
+						}
+						else if (data == 'error') {
+							toast('Unexpected error');
+						}
+						else {
+							toast('Registration Successful!');
+						}
 					}
 				);
 			});

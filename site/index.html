@@ -11,6 +11,14 @@
 		<script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
 		<link rel="import" href="components/polymer/polymer.html">
 		<link rel="import" href="components/app-router/app-router.html">
+		<link rel="import" href="components/paper-toast/paper-toast.html">
+		<script>
+			function toast(message){
+				var toast = $('#toast')[0];
+				toast.text = message;
+				toast.show();
+			}
+		</script>
 	</head>
 	<body>
 
@@ -31,4 +39,5 @@
 			<app-route path="/submitidea" import="pages/submission-page.html"></app-route>
 	  </app-router>
 	</body>
+	<paper-toast id="toast"></paper-toast>
 </html>

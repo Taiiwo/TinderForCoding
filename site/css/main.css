@@ -5,6 +5,7 @@ nav {
 .container {
   margin: 0 auto;
   padding-bottom: 20px;
+  padding-top: 30px;
 }
 
 .eric-switches {
@@ -15,4 +16,8 @@ nav {
   max-width: 200px;
   width: 100%;
   margin: auto;
+}
+
+#toast{
+  z-index: 1000000;
 }

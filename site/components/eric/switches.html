@@ -7,22 +7,40 @@
       .switch {
         display: inline-block;
       }
+
+      #num {
+        margin-left: 30px;
+        position: relative;
+        top: -30px;
+        display: inline-flex;
+      }
+      #switch1 {
+        float: left;
+      }
     </style>
-    <div class="col s6">
+    <div class="col">
       <p>{{name}}</p>
       <div class="eric-switches">
-        <div class="switch">
+        <div class="switch" id="switch1">
           <label>
               No
-            <input id="switch" type="checkbox">
-            <span class="lever"></span>
+            <input type="checkbox" id="inputTag">
+            <span id="switch" class="lever"></span>
               Yes
           </label>
         </div>
-        <div class="txtbox">
-          <div class="input-field col s6">
-            <input id="num" type="text" class="validate">
-            <label for="num">Ideal Number</label>
+        <div id="num">
+          <div class="txtbox">
+            <div class="input-field col s6 txtbx">
+              <input type="number" class="validate" min="0">
+              <label for="num1">Ideal Number</label>
+            </div>
+          </div>
+          <div class="txtbox">
+            <div class="input-field col s6 txtbx">
+              <input type="number" class="validate" min="0">
+              <label for="num2">Ideal Skill Level</label>
+            </div>
           </div>
         </div>
       </div>
@@ -33,8 +51,21 @@
   Polymer({
     is: "eric-switches",
     attached: function() {
-      var swit = $('#switch');
-      var num = $('#num');
+      var swit = $(this.$.switch);
+      var num = $(this.$.num);
+      num.css({opacity: 0})
+      swit.click(function() {
+        if (num.css("opacity") == 0){
+          num.animate({
+            opacity: 1
+          }, 300);
+        }
+        else {
+          num.animate({
+            opacity: 0
+          }, 500);
+        }
+      });
     }
   });
 </script>
