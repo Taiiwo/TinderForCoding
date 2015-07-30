@@ -10,9 +10,7 @@
 
       #num {
         margin-left: 30px;
-        position: relative;
-        top: -30px;
-        display: inline-flex;
+        display: inline;
       }
       #switch1 {
         float: left;
@@ -25,23 +23,26 @@
           <label>
               No
             <input type="checkbox" id="inputTag">
-            <span id="switch" class="lever"></span>
+            <span id="switch2" class="lever"></span>
               Yes
           </label>
         </div>
         <div id="num">
-          <div class="txtbox">
-            <div class="input-field col s6 txtbx">
-              <input type="number" class="validate" min="0">
-              <label for="num1">Ideal Number</label>
-            </div>
-          </div>
-          <div class="txtbox">
-            <div class="input-field col s6 txtbx">
-              <input type="number" class="validate" min="0">
-              <label for="num2">Ideal Skill Level</label>
-            </div>
-          </div>
+          <p class="range-field" id="slider1">
+            Number of Devs
+            <input type="range" min="0" max="10" />
+            <span class="thumb">
+              <span class="value"></span>
+            </span>
+          </p>
+          <p class="range-field" id="slider2">
+            Skill Level
+            <input type="range" min="0" max="10" />
+            <span class="thumb">
+              <span class="value"></span>
+            </span>
+          </p>
+        </div>
         </div>
       </div>
     </div>
@@ -51,17 +52,25 @@
   Polymer({
     is: "eric-switches",
     attached: function() {
-      var swit = $(this.$.switch);
-      var num = $(this.$.num);
-      num.css({opacity: 0})
+      var swit = $(this.$.switch2);
+      var slider1 = $(this.$.slider1);
+      var slider2 = $(this.$.slider2);
+      slider1.css({opacity: 0});
+      slider2.css({opacity: 0});
       swit.click(function() {
-        if (num.css("opacity") == 0){
-          num.animate({
+        if (slider1.css("opacity") == 0){
+          slider1.animate({
+            opacity: 1
+          }, 300);
+          slider2.animate({
             opacity: 1
           }, 300);
         }
         else {
-          num.animate({
+          slider1.animate({
+            opacity: 0
+          }, 500);
+          slider2.animate({
             opacity: 0
           }, 500);
         }
