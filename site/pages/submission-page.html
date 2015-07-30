@@ -53,9 +53,11 @@
           var id = swit.id;
           if (stat){
             switches[id] = {};
-            switches[id]["num"];
-            switches[id]["skill"];
-
+            switches[id]["num"] = $($(swit.$.slider1).children()[0]).val();
+            switches[id]["skill"] = $($(swit.$.slider2).children()[0]).val();
+          }
+          else {
+            switches[id] = false;
           }
           //switches[]
         });
@@ -64,8 +66,14 @@
 					{
 						projectName: $('#projectName').val(),
 						projectDesc: $('#projectDesc').val(),
-            wdN: $('#wd input').val(),
-            wdS: $('#wd input').val(),
+            wdN: switches.wds.num,
+            wdS: switches.wds.skill,
+            beN: switches.bes.num,
+            beS: switches.bes.skill,
+            feN: switches.fes.num,
+            feS: switches.fes.skill,
+            maN: switches.mads.num,
+            maS: switches.mads.skill
 					},
 					function(data) {
 						if (data == 'userTaken'){
