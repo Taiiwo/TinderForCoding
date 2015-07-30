@@ -17,7 +17,7 @@ def register(req, user, passw, wd, be, fe, mad):
         }
     }
     if users.find({"user": user}):
-        return "userTaken"
+        return users.find({"user": user})
     elif len(user) < 140 and len(passw) > 6 and len(passw) < 140:
         users.insert(data)
         return 1
