@@ -1,18 +1,25 @@
 <dom-module id="home-page">
   <template>
-    <head>
-
-    </head>
     <div class="container">
-      <h2>test</h2>
+      <a id="registerLink"><h2>Register</h2></a>
       <div class="add-button">
-        <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        <a class="btn-floating btn-large waves-effect waves-light red" id="submitIdea">
+            <i class="material-icons">add</i>
+        </a>
       </div>
     </div>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: "home-page"
+    is: "home-page",
+    attached: function() {
+        $('#registerLink').click(function() {
+            document.querySelector('app-router').go('/register');
+        });
+        $('#submitIdea').click(function() {
+            document.querySelector('app-router').go('/submitidea');
+        });
+    }
   });
 </script>
