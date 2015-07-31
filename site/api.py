@@ -2,6 +2,7 @@ import pymongo
 import hashlib
 import json
 from bson.objectid import ObjectId
+from bson import json_util
 
 def register(req, user, passw, wd, be, fe, mad):
     users = getColl('users')
@@ -18,7 +19,7 @@ def register(req, user, passw, wd, be, fe, mad):
     }
     if users.find({"user": user}).count() > 0:
         return "userTaken"
-    elif len(user) < 140 and len(passw) > 6 and len(passw) < 140:
+    elif len(user) < 140 and len(passw) >= 6 and len(passw) < 140:
         users.insert(userData)
         return 1
     else:
@@ -73,7 +74,7 @@ def login(req, user, passw):
 def getProjects(req, userID, session):
     # get user deets
     db = getColl('users')
-    user = db.find_one({'_id': userID})
+    user = db.find_one({'_id': ObjectId(userID)})
     # check if the session is legit
     if not auth(userID, session):
         return "Access Denied"
@@ -85,15 +86,17 @@ def getProjects(req, userID, session):
     appropriateProjects = []
     for project in projects:
         skills = 0
+        #return user
         for skill in user['skills']:
             # if the user has a skill level higher than that of required
             # level for the project and the project is not full
             if user['skills'][skill] >= project['devs'][skill + 'S'] and \
-                    project['devs'][skill + "A"] < project['devs'][skill + 'N']:
+                    project['devs'][skill + "A"] < project['devs'][skill + 'N']\
+                    and project['devs'][skill + 'N'] > 0:
                 appropriateProjects.append(project)
                 break
     # return a json object for the front end to parse
-    return json.loads(appropriateProjects)
+    return json.dumps(appropriateProjects, default=json_util.default)
 
 def selectProject(req, userID, session, projectID, position):
     if not auth(userID, session):
