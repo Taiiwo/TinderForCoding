@@ -57,7 +57,8 @@ def login(req, user, passw):
         # User logged in. Gibbe (session) cookies
         return json.dumps({
             "session": sha512(userD['_id'] + userD['passw']),
-            "userID": userD['_id']
+            "userID": userD['_id'],
+            "details": userD
         })
 
 ### Here starts the auth-only functions. Make sure you check their session cookies!
