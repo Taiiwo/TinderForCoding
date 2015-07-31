@@ -48,6 +48,7 @@
                   $('<eric-projects/>')
                     .attr('name', project.projectName)
                     .attr('desc', project.projectDesc)
+                    .attr('projectid', project['_id']['$oid'])
                 );
               }
             }
