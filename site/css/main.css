@@ -2,6 +2,9 @@ nav {
   padding-left: 10px;
 }
 
+nav img {
+  height: 65px;
+}
 .container {
   margin: 0 auto;
   padding-bottom: 20px;
