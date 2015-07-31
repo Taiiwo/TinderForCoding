@@ -1,11 +1,23 @@
 <dom-module id="eric-projects">
-  <template projectName="{{projectName}}" projectDesc="{{projectDesc}}">
+  <template name={{name}} desc={{desc}}>
+    <style>
+    #icon{
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    </style>
     <ul class="collection">
-     <li class="collection-item avatar">
-       <span class="title">{{projectName}}</span>
-       <p>{{projectDesc}}</p>
-       <a href="#!" class="secondary-content"><i class="material-icons">send</i></a>
+     <li class="collection-item">
+       <h5 class="title">{{name}}</h5>
+       <p>{{desc}}</p>
+       <a href="#!" class="secondary-content"><i id="icon" class="material-icons">send</i></a>
      </li>
    </ul>
   </template>
 </dom-module>
+<script>
+  Polymer({
+    is: 'eric-projects'
+  });
+</script>
