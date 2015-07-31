@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta charset="utf-8"/>
 		<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
@@ -18,6 +19,7 @@
                             toast.text = message;
                             toast.show();
                     }
+                    // check if we have a session cookie, if not, show login screen
 		</script>
 	</head>
 	<body>
