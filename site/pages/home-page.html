@@ -1,11 +1,20 @@
+<link rel="import" href="../components/eric/eric-projects.html">
 <dom-module id="home-page">
   <template>
+    <style>
+      #add {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+    </style>
     <div class="container">
-      <div class="add-button">
+      <div id="add" class="add-button">
         <a class="btn-floating btn-large waves-effect waves-light red" id="submitIdea">
             <i class="material-icons">add</i>
         </a>
       </div>
+      <div id="projects"></div>
     </div>
   </template>
 </dom-module>
@@ -32,7 +41,15 @@
             },
             function(data){
               // we got the projects, load them to the page here
-              console.log(data);
+              data = JSON.parse(data);
+              for (var project in data){
+                project = data[project];
+                $('#projects').append(
+                  $('<eric-projects/>')
+                    .attr('name', project.projectName)
+                    .attr('desc', project.projectDesc)
+                );
+              }
             }
           )
         }
