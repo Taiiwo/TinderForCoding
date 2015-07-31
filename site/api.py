@@ -87,13 +87,15 @@ def getProjects(req, userID, session):
         skills = 0
         #return user
         for skill in user['skills']:
+            # return str(project['devs'][skill + 'N']) + " >= " + str(0)
             # if the user has a skill level higher than that of required
             # level for the project and the project is not full
-            if user['skills'][skill] >= project['devs'][skill + 'S'] and \
-                    project['devs'][skill + "A"] < project['devs'][skill + 'N']\
-                    and project['devs'][skill + 'N'] > 0:
-                appropriateProjects.append(project)
-                break
+            if int(user['skills'][skill]) >= int(project['devs'][skill + 'S']) and \
+                    int(project['devs'][skill + "A"]) < int(project['devs'][skill + 'N'])\
+                    and int(project['devs'][skill + 'N']) > 0:
+                skills += 1
+        if skills > 0:
+            appropriateProjects.append(project)
     # return a json object for the front end to parse
     return json.dumps(appropriateProjects, default=json_util.default)
 
@@ -138,7 +140,7 @@ def auth(userID, session):
     db = getColl('users')
     user = db.find_one({'_id': ObjectId(userID)})
     # check if the session is legit
-    if session == sha512(str(user['_id']) + user['passw']):
+    if user and session == sha512(str(user['_id']) + user['passw']):
         return True
     else:
         return False
