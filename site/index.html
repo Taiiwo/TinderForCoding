@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<meta charset="utf-8"/>
-		<link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
-		<link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection"/>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<script type="text/javascript" src="js/materialize.js"></script>
-		<script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
-		<link rel="import" href="components/polymer/polymer.html">
-		<link rel="import" href="components/app-router/app-router.html">
-		<link rel="import" href="components/paper-toast/paper-toast.html">
-		<script>
-                    function toast(message){
-                        var toast = $('#toast')[0];
-                            toast.text = message;
-                            toast.show();
-                    }
-                    // check if we have a session cookie, if not, show login screen
-		</script>
-	</head>
-	<body>
+  <head>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="components/polymer/polymer.html">
+    <link rel="import" href="components/app-router/app-router.html">
+    <link rel="import" href="components/paper-toast/paper-toast.html">
+    <script>
+			function toast(message){
+			  var toast = $('#toast')[0];
+			  toast.text = message;
+			  toast.show();
+			}
+			function api(action, data, callback){
+				var baseURL = "";
+				$.post(
+					baseURL + "api.py/" + action,
+					data,
+					callback
+				);
+			}
+    </script>
+  </head>
+  <body>
 
-		<nav>
-	    <div class="nav-wrapper">
-	      <a href="index.html" class="brand-logo">Coder8</a>
-	      <ul id="nav-mobile" class="right hide-on-med-and-down">
-	        <!--<li><a href="sass.html">Sass</a></li>
-	        <li><a href="badges.html">Components</a></li>
-	        <li><a href="collapsible.html">JavaScript</a></li>-->
-	      </ul>
-	    </div>
-	  </nav>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="index.html" class="brand-logo">Coder8</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <!--<li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li><a href="collapsible.html">JavaScript</a></li>-->
+        </ul>
+      </div>
+    </nav>
 
-		<app-router>
-			<app-route path="/**/" import="pages/home-page.html"></app-route>
-			<app-route path="/register" import="pages/register-page.html"></app-route>
+    <app-router>
+      <app-route path="/**/" import="pages/home-page.html"></app-route>
+      <app-route path="/register" import="pages/register-page.html"></app-route>
 			<app-route path="/submitidea" import="pages/submission-page.html"></app-route>
-	  </app-router>
-	</body>
-	<paper-toast id="toast"></paper-toast>
+			<app-route path="/login" import="pages/login-page.html"></app-route>
+    </app-router>
+  </body>
+  <paper-toast id="toast"></paper-toast>
 </html>

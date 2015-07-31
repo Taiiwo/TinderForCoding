@@ -1,7 +1,6 @@
 <dom-module id="home-page">
   <template>
     <div class="container">
-      <a id="registerLink"><h2>Register</h2></a>
       <div class="add-button">
         <a class="btn-floating btn-large waves-effect waves-light red" id="submitIdea">
             <i class="material-icons">add</i>
@@ -14,12 +13,29 @@
   Polymer({
     is: "home-page",
     attached: function() {
-        $('#registerLink').click(function() {
-            document.querySelector('app-router').go('/register');
-        });
         $('#submitIdea').click(function() {
             document.querySelector('app-router').go('/submitidea');
         });
+        // check if we have a session cookie, if not, show login screen
+        if ($.cookie['session'] == undefined){
+          // user is not logged in, send them to login
+          document.querySelector('app-router').go('/login');
+        }
+        else {
+          var userID = $.cookie['userID'];
+          var session = $.cookie['session'];
+          api(
+            "getProjects",
+            {
+              userID,
+              session
+            },
+            function(data){
+              // we got the projects, load them to the page here
+              console.log(data);
+            }
+          )
+        }
     }
   });
 </script>

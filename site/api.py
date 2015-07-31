@@ -1,6 +1,7 @@
 import pymongo
 import hashlib
 import json
+from bson.objectid import ObjectId
 
 def register(req, user, passw, wd, be, fe, mad):
     users = getColl('users')
@@ -15,8 +16,8 @@ def register(req, user, passw, wd, be, fe, mad):
         },
         "messages": []
     }
-    if users.find({"user": user}):
-        return users.find({"user": user})
+    if users.find({"user": user}).count() > 0:
+        return "userTaken"
     elif len(user) < 140 and len(passw) > 6 and len(passw) < 140:
         users.insert(userData)
         return 1
@@ -39,8 +40,8 @@ def submitIdea(req, projectName, projectDesc, wdS, beS, feS, maS, wdN, beN, feN,
             "feS": feS,
             "feA": 0,
             "maN": maN,
-            "maS": maS
-            "maA": 0,
+            "maS": maS,
+            "maA": 0
         },
         "devsApplied": {}
     }
@@ -52,23 +53,29 @@ def submitIdea(req, projectName, projectDesc, wdS, beS, feS, maS, wdN, beN, feN,
 
 def login(req, user, passw):
     db = getColl('users')
-    userD = db.find({"user": user})
+    userD = db.find_one({"user": user})
     if userD['passw'] == sha512(passw):
         # User logged in. Gibbe (session) cookies
+        userID = str(userD['_id']);
+        del userD['_id']
+        #userD['_id'] = str(userD['_id'])
+        #return userD['_id']
         return json.dumps({
-            "session": sha512(userD['_id'] + userD['passw']),
-            "userID": userD['_id'],
+            "session": sha512(str(userID) + userD['passw']),
+            "userID": userID,
             "details": userD
         })
+    else:
+        return False
 
 ### Here starts the auth-only functions. Make sure you check their session cookies!
 
 def getProjects(req, userID, session):
     # get user deets
     db = getColl('users')
-    user = db.find({'_id': userID})
+    user = db.find_one({'_id': userID})
     # check if the session is legit
-    if not auth(userID, session):)
+    if not auth(userID, session):
         return "Access Denied"
     # user is who they say they are. Continue to find them projects.
     # so it turns out that mongoDB uses JS to process where clauses, so we might aswell do it here
@@ -127,7 +134,9 @@ def getColl(name):
 def auth(userID, session):
     # get user deets
     db = getColl('users')
-    user = db.find({'_id': userID})
+    user = db.find_one({'_id': ObjectId(userID)})
     # check if the session is legit
-    if not session == sha512(userD['_id'] + userD['passw']):
+    if session == sha512(str(user['_id']) + user['passw']):
+        return True
+    else:
         return False
