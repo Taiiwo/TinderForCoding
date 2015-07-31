@@ -51,8 +51,8 @@
             if (data != "False"){
               // console.log(data);
               data = JSON.parse(data);
-              $.cookie['session'] = data['session'];
-              $.cookie['userID'] = data['userID'];
+              $.cookie('session', data['session']);
+              $.cookie('userID', data['userID']);
               // $.cookie['session'];
 						  toast('Login Successful!');
 						  document.querySelector('app-router').go('/');

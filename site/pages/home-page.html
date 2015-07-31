@@ -26,13 +26,13 @@
             document.querySelector('app-router').go('/submitidea');
         });
         // check if we have a session cookie, if not, show login screen
-        if ($.cookie['session'] == undefined){
+        if ($.cookie('session') == undefined){
           // user is not logged in, send them to login
           document.querySelector('app-router').go('/login');
         }
         else {
-          var userID = $.cookie['userID'];
-          var session = $.cookie['session'];
+          var userID = $.cookie('userID');
+          var session = $.cookie('session');
           api(
             "getProjects",
             {

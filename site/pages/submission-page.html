@@ -73,8 +73,8 @@
                     maN: switches.mads.num,
                     maS: switches.mads.skill
                 };
-                $.post(
-                    baseUrl + 'api.py/submitIdea',
+                api(
+                    'submitIdea',
                     data,
                     function(data) {
                             toast('Project Created!');

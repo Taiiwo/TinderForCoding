@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/main.css" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script type="text/javascript" src="js/materialize.js"></script>
-    <script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
     <link rel="import" href="components/polymer/polymer.html">
     <link rel="import" href="components/app-router/app-router.html">
     <link rel="import" href="components/paper-toast/paper-toast.html">
@@ -20,7 +20,7 @@
 			  toast.show();
 			}
 			function api(action, data, callback){
-				var baseURL = "";
+				var baseURL = "http://mwtn.uk/git/coder8/site/";
 				$.post(
 					baseURL + "api.py/" + action,
 					data,

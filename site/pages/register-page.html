@@ -43,8 +43,8 @@
 		attached: function() {
 			var baseUrl = "";
 			$('#register').click(function(){
-				$.post(
-					baseUrl + 'api.py/register',
+				api(
+					'register',
 					{
 						user: $('#user').val(),
 						passw: $('#passw').val(),
