@@ -20,8 +20,7 @@ def register(req, user, passw, wd, be, fe, mad):
     if users.find({"user": user}).count() > 0:
         return "userTaken"
     elif len(user) < 140 and len(passw) >= 6 and len(passw) < 140:
-        users.insert(userData)
-        return 1
+        return users.insert(userData)
     else:
         return "error"
 
