@@ -20,8 +20,8 @@
 			  toast.show();
 			}
 			function api(action, data, callback){
-        // var baseURL = "";
-        var baseURL = "http://mwtn.uk/git/coder8/site/";
+        var baseURL = "";
+        // var baseURL = "http://mwtn.uk/git/coder8/site/";
 				$.post(
 					baseURL + "api.py/" + action,
 					data,
@@ -34,11 +34,9 @@
 
     <nav>
       <div class="nav-wrapper">
-        <a href="index.html" class="brand-logo"><img src="img/Eric_6.svg"/></a
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <!--<li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>-->
+        <a href="#/" class="brand-logo"><img src="img/Eric_6.svg"/></a>
+        <ul id="nav-mobile" class="right">
+          <li id="user-div"></li>
         </ul>
       </div>
     </nav>

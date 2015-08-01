@@ -56,12 +56,13 @@ def login(req, user, passw):
     userD = db.find_one({"user": user})
     if userD['passw'] == sha512(passw):
         # User logged in. Gibbe (session) cookies
-        userID = str(userD['_id']);
+        userID = str(userD['_id'])
         del userD['_id']
+        del userD['passw']
         #userD['_id'] = str(userD['_id'])
         #return userD['_id']
         return json.dumps({
-            "session": sha512(str(userID) + userD['passw']),
+            "session": sha512(str(userID) + sha512(passw)),
             "userID": userID,
             "details": userD
         })
@@ -97,7 +98,11 @@ def getProjects(req, userID, session):
         if skills > 0:
             appropriateProjects.append(project)
     # return a json object for the front end to parse
-    return json.dumps(appropriateProjects, default=json_util.default)
+    del user['passw']
+    return json.dumps({
+        "projects": appropriateProjects,
+        "user": user
+    }, default=json_util.default)
 
 def selectProject(req, userID, session, projectID, position):
     if not auth(userID, session):

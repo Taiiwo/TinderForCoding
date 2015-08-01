@@ -39,7 +39,6 @@
       $('#registerLink').click(function() {
           document.querySelector('app-router').go('/register');
       });
-			var baseUrl = "";
 			$('#login').click(function(){
         api(
           "login",
@@ -49,11 +48,11 @@
           },
 					function(data) {
             if (data != "False"){
-              // console.log(data);
               data = JSON.parse(data);
               $.cookie('session', data['session']);
               $.cookie('userID', data['userID']);
-              // $.cookie['session'];
+							$.cookie('userName', data['details']['user'])
+							window.authUser = data.details;
 						  toast('Login Successful!');
 						  document.querySelector('app-router').go('/');
             }

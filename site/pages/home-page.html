@@ -22,38 +22,94 @@
   Polymer({
     is: "home-page",
     attached: function() {
-        $('#submitIdea').click(function() {
-            document.querySelector('app-router').go('/submitidea');
-        });
-        // check if we have a session cookie, if not, show login screen
-        if ($.cookie('session') == undefined){
-          // user is not logged in, send them to login
-          document.querySelector('app-router').go('/login');
-        }
-        else {
-          var userID = $.cookie('userID');
-          var session = $.cookie('session');
-          api(
-            "getProjects",
-            {
-              userID,
-              session
-            },
-            function(data){
-              // we got the projects, load them to the page here
-              data = JSON.parse(data);
-              for (var project in data){
-                project = data[project];
-                $('#projects').append(
-                  $('<eric-projects/>')
-                    .attr('name', project.projectName)
-                    .attr('desc', project.projectDesc)
-                    .attr('projectid', project['_id']['$oid'])
-                );
+      $('#submitIdea').click(function() {
+          document.querySelector('app-router').go('/submitidea');
+      });
+      // check if we have a session cookie, if not, show login screen
+      if ($.cookie('session') == undefined){
+        // user is not logged in, send them to login
+        document.querySelector('app-router').go('/login');
+      }
+      else {
+        var userID = $.cookie('userID');
+        var session = $.cookie('session');
+        api(
+          "getProjects",
+          {
+            userID,
+            session
+          },
+          function(data){
+            // we got the projects, load them to the page here
+            data = JSON.parse(data);
+            window.authUser = data.user;
+            for (var project in data.projects){
+              project = data.projects[project];
+              // build roles thing
+              var rolesDiv = $('<div/>');
+              for (var role in authUser['skills']){
+                if (project.devs[role + "N"] > 0){
+                  var button = $('<a/>')
+                    .addClass('btn')
+                    .addClass('waves-effect')
+                    .addClass('waves-light')
+                    .text(
+                      role +
+                      ': ' +
+                      project.devs[role + "A"] + '/' +
+                      project.devs[role + "N"]
+                    )
+                  ;
+                  if (authUser.skills[role] < project.devs[role + 'S']){
+                    button.addClass('disabled');
+                  }
+                  else {
+                    button.click(function(){
+                      toast("Sorry, not implemented yet.");
+                    });
+                  }
+                  rolesDiv.append(button);
+                }
               }
+              $('#projects').append(
+                $('<eric-projects/>')
+                  .attr('name', project.projectName)
+                  .attr('desc', project.projectDesc)
+                  .attr('projectid', project['_id']['$oid'])
+              );
+              $('eric-projects[projectid='+ project['_id']['$oid'] +'] li.collection-item').append(rolesDiv);
             }
+          }
+        );
+        $('#user-div')
+          .text(
+            "Hello, " + $.cookie('userName')
           )
-        }
+        ;
+        var w = $('#user-div').width() + 21;
+        $('#user-div').css({"width": w});
+        $('#user-div')
+          .mouseover(function(){
+            $('#user-div')
+              .text("Logout")
+              .click(function(){
+                $.removeCookie('session');
+                $.removeCookie('userID');
+                $.removeCookie('userName');
+                $('#user-div').empty();
+                $('#user-div').off();
+                $('app-router')[0].go('/login');
+              })
+            ;
+          })
+          .mouseout(function(){
+            $('#user-div')
+              .text("Hello, " + $.cookie('userName'))
+              .off('click')
+            ;
+          })
+        ;
+      }
     }
   });
 </script>

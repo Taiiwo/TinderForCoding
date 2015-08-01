@@ -11,20 +11,12 @@
      <li class="collection-item">
        <h5 class="title">{{name}}</h5>
        <p>{{desc}}</p>
-       <a id="enterProject" class="secondary-content"><i id="icon" class="material-icons">send</i></a>
      </li>
    </ul>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: 'eric-projects',
-    attached: function(){
-      $('#enterProject').click(function (e){
-        // yolo
-        var projectID = e.target.parentElement.parentElement.parentElement.parentElement.attributes['projectid'].value;
-        toast("Not implemented yet, sorry.");
-      });
-    }
+    is: 'eric-projects'
   });
 </script>
