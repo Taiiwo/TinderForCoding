@@ -29,10 +29,10 @@
           </div>
         </div>
       <h2>Who do you need?</h2>
-      <eric-switches id="wds" name="Web Developers"></eric-switches>
-      <eric-switches id="bes" name="Back End Developers"></eric-switches>
-      <eric-switches id="fes" name="Front End Developers"></eric-switches>
-      <eric-switches id="mads" name="Mobile Developers"></eric-switches>
+      <eric-switches id="wd" name="Web Developers"></eric-switches>
+      <eric-switches id="be" name="Back End Developers"></eric-switches>
+      <eric-switches id="fe" name="Front End Developers"></eric-switches>
+      <eric-switches id="ma" name="Mobile Developers"></eric-switches>
       <button id="submitIdea" class="btn waves-effect waves-light" type="submit">Submit
         <i class="material-icons right">send</i>
       </button>
@@ -64,15 +64,18 @@
                 var data = {
                     projectName: $('#projectName').val(),
                     projectDesc: $('#projectDesc').val(),
-                    wdN: switches.wds.num,
-                    wdS: switches.wds.skill,
-                    beN: switches.bes.num,
-                    beS: switches.bes.skill,
-                    feN: switches.fes.num,
-                    feS: switches.fes.skill,
-                    maN: switches.mads.num,
-                    maS: switches.mads.skill
+                    ideaRoles: {}
                 };
+                var roles = ['wd', 'be', 'fe', 'ma'];
+                var ideaRoles = {};
+                for (var r in roles){
+                    var role = roles[r];
+                    ideaRoles[role] = {};
+                    ideaRoles[role]['N'] = switches[role].num;
+                    ideaRoles[role]['S'] = switches[role].skill;
+                }
+                ideaRoles = JSON.stringify(ideaRoles);
+                data['ideaRoles'] = ideaRoles;
                 api(
                     'submitIdea',
                     data,

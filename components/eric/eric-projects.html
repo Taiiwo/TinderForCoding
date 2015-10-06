@@ -24,7 +24,7 @@
       // build roles thing
       rolesDiv = $('<div>');
       for (var role in authUser['skills']){
-        if (project.devs[role + "N"] > 0){
+        if (project.devs[role]["N"] > 0){
           var button = $('<a>')
             .addClass('btn')
             .addClass('waves-effect')
@@ -32,11 +32,11 @@
             .text(
               role +
               ': ' +
-              project.devs[role + "A"] + '/' +
-              project.devs[role + "N"]
+              project.devs[role]["A"] + '/' +
+              project.devs[role]["N"]
             )
           ;
-          if (authUser.skills[role] < project.devs[role + 'S']){
+          if (authUser.skills[role] < project.devs[role]['S']){
             button.addClass('disabled');
           }
           else {

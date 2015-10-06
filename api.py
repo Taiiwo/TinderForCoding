@@ -4,17 +4,20 @@ import json
 from bson.objectid import ObjectId
 from bson import json_util
 
-def register(req, user, passw, wd, be, fe, mad):
+roles = {
+    "wd": "Website Development",
+    "be": "Back-end Programming",
+    "fe": "Front-end Programming",
+    "ma": "Mobile App Development"
+}
+
+def register(req, user, passw, skills):
+    skills = json.loads(skills)
     users = getColl('users')
     userData = {
         "user": user,
         "passw": sha512(passw),
-        "skills": {
-            "wd": wd,
-            "be": be,
-            "fe": fe,
-            "ma": mad
-        },
+        "skills": skills,
         "messages": []
     }
     if users.find({"user": user}).count() > 0:
@@ -24,27 +27,20 @@ def register(req, user, passw, wd, be, fe, mad):
     else:
         return "error"
 
-def submitIdea(req, projectName, projectDesc, wdS, beS, feS, maS, wdN, beN, feN, maN):
+def submitIdea(req, projectName, projectDesc, ideaRoles):
+    ideaRoles = json.loads(ideaRoles)
     projects = getColl('projects')
     project = {
         "projectName": projectName,
         "projectDesc": projectDesc,
-        "devs": {
-            "wdN": wdN,
-            "wdS": wdS,
-            "wdA": 0,
-            "beN": beN,
-            "beS": beS,
-            "beA": 0,
-            "feN": feN,
-            "feS": feS,
-            "feA": 0,
-            "maN": maN,
-            "maS": maS,
-            "maA": 0
-        },
+        "devs": {},
         "devsApplied": {}
     }
+    for role in roles:
+        project['devs'][role] = {}
+        project['devs'][role]['N'] = ideaRoles[role]['N']
+        project['devs'][role]['S'] = ideaRoles[role]['S']
+        project['devs'][role]['A'] = 0
     if len(projectName) < 140 and len(projectDesc) < 512:
         projects.insert(project)
         return 1
@@ -91,9 +87,9 @@ def getProjects(req, userID, session):
             # return str(project['devs'][skill + 'N']) + " >= " + str(0)
             # if the user has a skill level higher than that of required
             # level for the project and the project is not full
-            if int(user['skills'][skill]) >= int(project['devs'][skill + 'S']) and \
-                    int(project['devs'][skill + "A"]) < int(project['devs'][skill + 'N'])\
-                    and int(project['devs'][skill + 'N']) > 0:
+            if int(user['skills'][skill]) >= int(project['devs'][skill]['S']) and \
+                    int(project['devs'][skill]["A"]) < int(project['devs'][skill]['N'])\
+                    and int(project['devs'][skill]['N']) > 0:
                 skills += 1
         if skills > 0:
             appropriateProjects[str(project['_id'])] = project

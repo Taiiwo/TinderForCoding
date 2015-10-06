@@ -29,7 +29,7 @@
 			<skill-slider id="wd" name="Web Development"></skill-slider>
 			<skill-slider id="be" name="Back End Development"></skill-slider>
 			<skill-slider id="fe" name="Front End Development"></skill-slider>
-			<skill-slider id="mad" name="Mobile App Development"></skill-slider>
+			<skill-slider id="ma" name="Mobile App Development"></skill-slider>
 			<button id="register" class="btn waves-effect waves-light" type="submit" name="action">
 				Submit
 				<i class="material-icons right">send</i>
@@ -43,16 +43,19 @@
 		attached: function() {
 			var baseUrl = "";
 			$('#register').click(function(){
-				api(
+                                var skills = {};
+                                var roles = ['wd', 'be', 'fe', 'ma'];
+                                for (var r in roles){
+                                    var role = roles[r];
+                                    skills[role] = parseInt($('#'+ role +' input').val());
+                                }
+    				api(
 					'register',
 					{
 						user: $('#user').val(),
 						passw: $('#passw').val(),
-						wd: $('#wd input').val(),
-						be: $('#be input').val(),
-						fe: $('#fe input').val(),
-						mad: $('#mad input').val()
-					},
+                                                skills: JSON.stringify(skills)
+                                        },
 					function(data) {
 						if (data == 'userTaken'){
 							toast('Sorry, username taken.');
