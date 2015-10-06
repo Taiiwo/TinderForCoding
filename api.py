@@ -83,7 +83,7 @@ def getProjects(req, userID, session):
     # get all records in the DB
     projects = getColl('projects').find({})
     # sort through them
-    appropriateProjects = []
+    appropriateProjects = {}
     for project in projects:
         skills = 0
         #return user
@@ -96,7 +96,7 @@ def getProjects(req, userID, session):
                     and int(project['devs'][skill + 'N']) > 0:
                 skills += 1
         if skills > 0:
-            appropriateProjects.append(project)
+            appropriateProjects[str(project['_id'])] = project
     # return a json object for the front end to parse
     del user['passw']
     return json.dumps({
