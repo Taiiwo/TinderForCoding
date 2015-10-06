@@ -43,13 +43,16 @@
             // we got the projects, load them to the page here
             data = JSON.parse(data);
             window.authUser = data.user;
+            window.projectList = data.projects;
+            var projects = {};
             for (var project in data.projects){
               project = data.projects[project];
+              /*
               // build roles thing
-              var rolesDiv = $('<div/>');
+              rolesDiv = $('<div>').first();
               for (var role in authUser['skills']){
                 if (project.devs[role + "N"] > 0){
-                  var button = $('<a/>')
+                  var button = $('<a>')
                     .addClass('btn')
                     .addClass('waves-effect')
                     .addClass('waves-light')
@@ -71,13 +74,12 @@
                   rolesDiv.append(button);
                 }
               }
+              */
               $('#projects').append(
                 $('<eric-projects/>')
-                  .attr('name', project.projectName)
-                  .attr('desc', project.projectDesc)
                   .attr('projectid', project['_id']['$oid'])
               );
-              $('eric-projects[projectid='+ project['_id']['$oid'] +'] li.collection-item').append(rolesDiv);
+              //$('eric-projects[projectid='+ project['_id']['$oid'] +'] li.collection-item').append(rolesDiv);
             }
           }
         );

@@ -1,5 +1,5 @@
 <dom-module id="eric-projects">
-  <template name={{name}} desc={{desc}}>
+  <template projectid={{projectid}}>
     <style>
     #icon{
       position: absolute;
@@ -9,14 +9,46 @@
     </style>
     <ul class="collection">
      <li class="collection-item">
-       <h5 class="title">{{name}}</h5>
-       <p>{{desc}}</p>
+       <h5 class="title" id="title"></h5>
+       <p id="desc"></p>
      </li>
+     <li id="buttons"></li>
    </ul>
   </template>
 </dom-module>
 <script>
   Polymer({
-    is: 'eric-projects'
-  });
+    is: 'eric-projects',
+    attached: function() {
+      var project = projectList[this.getAttribute('projectid')];
+      // build roles thing
+      rolesDiv = $('<div>');
+      for (var role in authUser['skills']){
+        if (project.devs[role + "N"] > 0){
+          var button = $('<a>')
+            .addClass('btn')
+            .addClass('waves-effect')
+            .addClass('waves-light')
+            .text(
+              role +
+              ': ' +
+              project.devs[role + "A"] + '/' +
+              project.devs[role + "N"]
+            )
+          ;
+          if (authUser.skills[role] < project.devs[role + 'S']){
+            button.addClass('disabled');
+          }
+          else {
+            button.click(function(){
+              toast("Sorry, not implemented yet.");
+            });
+          }
+          rolesDiv.append(button);
+        }
+      $(this.$.title).text(project.projectName);
+      $(this.$.desc).text(project.projectDesc);
+      $(this.$.buttons).append(rolesDiv);
+    }
+  }});
 </script>
